@@ -1,15 +1,115 @@
 # 첫 스프링 부트 3 프로젝트
+
 project(directory) name = springboot-developer
 
-* Chapter 1: 개발 환경 구축하기
+**교재 내용 - 레벨 1**
+
+* Chapter 0: 개발 환경 구축하기
+  * 인텔리제이 설치
+  * 스프링 부트 3 프로젝트 만들기
+  * 포스트맨 설치
+* Chapter 1: 자바 백엔드 개발자가 알아두면 좋은 상식
+  * 서버와 클라이언트, DB, IP & port, 라이브러리 vs 프레임워크
 * Chatper 2: 스프링 부트 3 시작하기
-* Chatper 3: 스프링 부트 3 구조
-* Chapter 4: 테스트
+  * 스프링 vs 스프링 부트
+  * 스프링 핵심 개념
+* Chatper 3: 스프링 부트 3 구조 이해하기
+  * 스프링 부트 3 구조
+  * 스프링 부트 3 프로젝트 구조
+* Chapter 4: 테스트 코드 작성하는 법
 * Chapter 5: ORM (DB 조작)
 
 ---
 
 # Study Notes
+
+## 1. 스프링 부트 3 프로젝트 만들기
+
+### 1-1. 새로운 프로젝트 생성
+
+File > New Project
+
+* Language: Java
+* Build system: Gradle
+* JDK version: 17 (corretto-17)
+* Gradle DSL: Groovy
+* Advanced settings > GropuId: 도메인 eg) `me.lectura`
+
+### 1-2. `build.gradle` 작성
+
+```gradle
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.2'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'me.lectura'
+version = '1.0'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa') // 스프링 데이터 JPA
+    runtimeOnly('com.h2database:h2') // 인메모리 DB
+    compileOnly('org.projectlombok:lombok') // 롬복 라이브러리
+    annotationProcessor('org.projectlombok:lombok')
+}
+
+test {
+    useJUnitPlatform()
+}
+```
+
+`Gradle > 새로고침` 버튼을 누른다. 자동으로 필요한 패키지가 임포트된다.
+
+### 1-3. 메인 클래스 생성
+
+`src.main.java.<그룹_이름>`에 새로운 **패키지**를 만든다.\
+패키지 이름은 `<그룹_이름>.<프로젝트_이름>` 형식을 따른다.\
+eg) `me.lectura.springbootdeveloper`
+
+스프링 부트를 실행할 용도의 **클래스**를 만든다.\
+이름 형식은 `<프로젝트_이름>Application` 형식을 따른다.\
+eg) `SpringBootDeveloperApplication.java`
+
+메인 클래스를 작성한다.
+
+```java
+@SpringBootApplication
+public class SpringBootDeveloperApplication {
+    public static void main(String[] args){
+        SpringApplication.run(SpringBootDeveloperApplication.class, args);
+    }
+}
+```
+
+### 1-4. 프로젝트 구조 구성하기
+
+추천 프로젝트 구조는 다음과 같다.
+
+```
+src
+ㄴ main
+    ㄴ java
+        ㄴ <그룹_이름>
+            ㄴ <프로젝트_이름>
+                ㄴ <프로젝트_이름>Application.java (메인 클래스)
+    ㄴ resources
+        ㄴ static (정적 파일)
+        ㄴ templates (뷰 관련 파일)
+        ㄴ application.yml (스프링 부트 설정)
+ㄴ test
+ㄴ build.gradle
+ㄴ settings.gradle
+```
+
+---
 
 ## Chapter 2: 스프링 부트 3 시작하기
 
@@ -78,6 +178,23 @@ public class SpringBootDeveloperApplication {
 * build.gradle: 빌드 설정 파일
     * 의존성을 추가한 후 *새로고침 버튼*을 눌러서 추가한 의존성을 다운로드한다.
 * settings.gradle: 프로젝트 정보 설정 파일
+
+
+**application.yml 예시**
+
+```yaml
+spring:
+  jpa:
+    # 전송 쿼리 보여주는 옵션
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+    # 테이블 생성 후에 data.sql 실행하는 옵션
+    defer-datasource-initialization: true
+```
+
 
 ### 포스트맨-스프링 부트 요청-응답 과정
 
