@@ -7,6 +7,8 @@ project(directory) name = springboot-developer
 * Chapter 4: 테스트
 * Chapter 5: ORM (DB 조작)
 
+---
+
 # Study Notes
 
 ## Chapter 2: 스프링 부트 3 시작하기
@@ -48,6 +50,8 @@ public class SpringBootDeveloperApplication {
 
 그러면 IntelliJ가 꺼졌다가 다시 시작한다.
 
+---
+
 ## Chapter 3: 스프링 부트 3 구조
 
 ### 스프링 부트 3 구조
@@ -82,6 +86,8 @@ public class SpringBootDeveloperApplication {
 3. TestController - TestService - MemberRepository - DB 순서로 요청을 전달하고 데이터를 DB에서 가져온다.
 4. 뷰 리졸버는 템플릿 엔진을 사용해 HTML 문서를 만들거나 JSON, XML 등의 데이터를 생성한다.
 5. 결과를 포스트맨에서 볼 수 있다.
+
+---
 
 ## Chapter 5: DB 조작이 편해지는 ORM
 
